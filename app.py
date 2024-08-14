@@ -3,11 +3,13 @@ import os
 # import psycopg2
 from supabase import create_client, Client
 from dotenv import load_dotenv
+from flask_cors import CORS
 
 
 load_dotenv()
 
 app = Flask(__name__)
+CORS(app)
 
 SUPABASE_PROJECT_URL: str = os.getenv("SUPABASE_PROJECT_URL")
 SUPABASE_API_KEY: str = os.getenv("SUPABASE_API_KEY")
