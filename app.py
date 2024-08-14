@@ -22,8 +22,12 @@ def makeroom():
     
     if room_name:  # Pastikan nama room ada di dalam JSON
         result = supabase.table("Room").insert({"name": room_name}).execute()
-        print(result.data)
-        return result.data
+        
+        if result.data:  # Periksa apakah data berhasil dimasukkan
+            room_id = result.data[0]['id']  # Mengambil ID dari room yang baru dibuat
+            return {"room_id": room_id, "name": room_name}, 201  # Kembalikan room_id dan nama
+        else:
+            return {"error": "Failed to create room"}, 500  # Kembalikan error jika insert gagal
     else:
         return {"error": "Room name is missing"}, 400  # Kembalikan error jika nama room tidak ada
 
